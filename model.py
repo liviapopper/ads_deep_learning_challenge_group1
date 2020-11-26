@@ -5,20 +5,7 @@ from tensorflow.keras.layers import Input, Dense, Conv2D, Flatten, BatchNormaliz
 from tensorflow.keras.optimizers import SGD
 from tensorflow.keras import regularizers
 
-import tensorflow as tf
-
-def softmax_cross_entropy_with_logits(y_true, y_pred):
-	p = y_pred
-	pi = y_true
-
-	zero = tf.zeros(shape = tf.shape(pi), dtype=tf.float32)
-	where = tf.equal(pi, zero)
-
-	negatives = tf.fill(tf.shape(pi), -100.0) 
-	p = tf.where(where, negatives, p)
-
-	return tf.nn.softmax_cross_entropy_with_logits(labels = pi, logits = p)
-
+from loss import softmax_cross_entropy_with_logits
 
 class Residual_CNN():
 	def __init__(self, reg_const, learning_rate, input_dim,  output_dim, hidden_layers):
