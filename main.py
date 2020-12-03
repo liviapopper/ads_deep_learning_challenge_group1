@@ -3,6 +3,9 @@ from NNet import NNetWrapper
 from Coach import Coach
 from utils import dotdict
 
+import datetime
+
+now = datetime.datetime.now()
 args = dotdict({
     'numIters': 1000,
     'numEps': 100,              # Number of complete self-play games to simulate during a new iteration.
@@ -13,9 +16,9 @@ args = dotdict({
     'arenaCompare': 40,         # Number of games to play during arena play to determine if new net will be accepted.
     'cpuct': 1,
 
-    'checkpoint': './temp/',
+    'checkpoint': f'./temp/{now.strftime("%Y-%m-%d %H:%M:%S")}',
     'load_model': False,
-    'load_folder_file': ('/dev/models/8x100x50','best.pth.tar'),
+    'load_folder_file': ('./temp/','temp.pth.tar'),
     'numItersForTrainExamplesHistory': 20,
 })
 
@@ -24,6 +27,8 @@ def main():
     game = GobangGame(n=9, nir=9)
 
     network = NNetWrapper(game)
+    if args.load_model:
+        network.load_checkpoint(args.checkpoint)
     
     coach = Coach(game, network, args)
     coach.learn()
