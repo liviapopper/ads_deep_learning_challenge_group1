@@ -43,14 +43,10 @@ class NNetWrapper:
         """
         board: np array with board
         """
-        # timing
-        # start = time.time()
-
         # preparing input
         board = board[np.newaxis, :, :]
         pi, v = self.nnet.model.predict(board)
 
-        #print('PREDICTION TIME TAKEN : {0:03f}'.format(time.time()-start))
         return pi[0], v[0]
 
     def save_checkpoint(self, folder='checkpoint', filename='checkpoint.pth.tar'):
