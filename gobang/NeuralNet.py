@@ -1,8 +1,4 @@
-import sys
-sys.path.append('..')
-
-import argparse
-from tensorflow.keras.models import Model
+from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.layers import Dense,Conv2D,BatchNormalization,Reshape,Input,Activation,Flatten,Dropout
 from tensorflow.keras.optimizers import Adam
 
@@ -34,4 +30,4 @@ class GobangNNet():
         self.model.save(folder)
 
     def load(self, folder):
-        self.model = tf.keras.models.load_model(folder)
+        self.model = load_model(folder)
