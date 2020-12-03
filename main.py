@@ -1,38 +1,28 @@
-from model import Residual_CNN
-from agent import Agent
+from gobang.Game import GobangGame
+from NNet import NNetWrapper
+from Coach import Coach
+from utils import dotdict
 
-import gym
+args = dotdict({
+    'numIters': 1000,
+    'numEps': 100,              # Number of complete self-play games to simulate during a new iteration.
+    'tempThreshold': 15,        #
+    'updateThreshold': 0.6,     # During arena playoff, new neural net will be accepted if threshold or more of games are won.
+    'maxlenOfQueue': 200000,    # Number of game examples to train the neural networks.
+    'numMCTSSims': 25,          # Number of games moves for MCTS to simulate.
+    'arenaCompare': 40,         # Number of games to play during arena play to determine if new net will be accepted.
+    'cpuct': 1,
+    'numItersForTrainExamplesHistory': 20,
+})
 
-import wandb
-# wandb.init(project="Data Challenge 2 - Go")
+def main():
+    # Create a 9x9 board
+    game = GobangGame(n=9, nir=9)
 
-# Hyperparameters
-BOARD_SIZE = 9
-REG_CONST = 0.0001
-LEARNING_RATE = 0.1
-KOMI = 0
-CPUCT = 1
-MCTS_SIMS = 50
+    network = NNetWrapper(game)
+    
+    coach = Coach(game, network, args)
+    coach.learn()
 
-HIDDEN_CNN_LAYERS = [
-	{'filters':75, 'kernel_size': (4,4)},
-    {'filters':75, 'kernel_size': (4,4)},
-    {'filters':75, 'kernel_size': (4,4)},
-    {'filters':75, 'kernel_size': (4,4)},
-    {'filters':75, 'kernel_size': (4,4)},
-    {'filters':75, 'kernel_size': (4,4)}
-]
-
-
-# Init environment
-env = gym.make('gym_go:go-v0', size=BOARD_SIZE, komi=KOMI, reward_method='real')
-
-# Init models
-current_NN = Residual_CNN(REG_CONST, LEARNING_RATE, env.observation_space.shape, BOARD_SIZE^2, HIDDEN_CNN_LAYERS)
-best_NN = Residual_CNN(REG_CONST, LEARNING_RATE, env.observation_space.shape, BOARD_SIZE^2, HIDDEN_CNN_LAYERS)
-best_NN.model.set_weights(current_NN.model.get_weights())
-
-
-# Init agents
-current_player = Agent('current_player', MCTS_SIMS, CPUCT, current_NN)
-best_player = Agent('best_player', MCTS_SIMS, CPUCT, best_NN)
+if __name__ == "__main__":
+    main()
