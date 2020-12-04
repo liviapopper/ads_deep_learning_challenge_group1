@@ -5,6 +5,9 @@ from utils import dotdict
 
 import datetime
 
+import wandb
+wandb.init(project="AlphaZero", config={"NeuralNetworkSetup": "standard"})
+
 now = datetime.datetime.now()
 args = dotdict({
     'numIters': 1000,
@@ -16,9 +19,9 @@ args = dotdict({
     'arenaCompare': 40,         # Number of games to play during arena play to determine if new net will be accepted.
     'cpuct': 1,
 
-    'checkpoint': f'./temp/{now.strftime("%Y-%m-%d %H:%M:%S")}',
-    'load_model': False,
-    'load_folder_file': ('./temp/','temp.pth.tar'),
+    'checkpoint': f'./temp/2020-12-03 16:52:23',
+    'load_model': True,
+    'load_folder_file': ('./temp/2020-12-03 16:52:23','temp.pth.tar'),
     'numItersForTrainExamplesHistory': 20,
 })
 
