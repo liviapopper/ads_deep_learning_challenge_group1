@@ -19,9 +19,9 @@ args = dotdict({
     'arenaCompare': 40,         # Number of games to play during arena play to determine if new net will be accepted.
     'cpuct': 1,
 
-    'checkpoint': f'./temp/2020-12-03 16:52:23',
+    'checkpoint': f'./temp/2020-12-03 16-52-23',
     'load_model': True,
-    'load_folder_file': ('./temp/2020-12-03 16:52:23','temp.pth.tar'),
+    'load_folder_file': ('./temp/2020-12-03 16-52-23','temp.pth.tar'),
     'numItersForTrainExamplesHistory': 20,
 })
 
