@@ -6,7 +6,7 @@ from utils import dotdict
 import datetime
 
 import wandb
-wandb.init(project="AlphaZero", entity="ineedsugar", config={"NeuralNetworkSetup": "standard"})
+wandb.init(project="AlphaZero", entity="ineedsugar", name="lobotomize1", config={"NeuralNetworkSetup": "standard"})
 
 now = datetime.datetime.now()
 args = dotdict({
