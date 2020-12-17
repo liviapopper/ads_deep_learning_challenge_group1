@@ -14,7 +14,7 @@ class GobangNNet():
 
         x_image = Reshape((self.board_x, self.board_y, 1))(self.input_boards)                                                   # batch_size  x board_x x board_y x 1
         h_conv1 = Activation('relu')(BatchNormalization(axis=3)(Conv2D(args.num_channels, 3, padding='same')(x_image)))         # batch_size  x board_x x board_y x num_channels
-        h_conv2 = Activation('relu')(BatchNormalization(axis=3)(Conv2D(args.num_channels, 3, padding='valid')(h_conv1)))        # batch_size  x (board_x-2) x (board_y-2) x num_channels
+        h_conv2 = Activation('relu')(BatchNormalization(axis=3)(Conv2D(args.num_channels, 3, padding='same')(h_conv1)))         # batch_size  x (board_x-2) x (board_y-2) x num_channels
         h_conv3 = Activation('relu')(BatchNormalization(axis=3)(Conv2D(args.num_channels, 3, padding='valid')(h_conv2)))        # batch_size  x (board_x-4) x (board_y-4) x num_channels
         h_conv3_flat = Flatten()(h_conv3)       
         s_fc1 = Dropout(args.dropout)(Activation('relu')(BatchNormalization(axis=1)(Dense(1024)(h_conv3_flat))))                # batch_size x 1024
