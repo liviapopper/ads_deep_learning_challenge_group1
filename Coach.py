@@ -62,7 +62,7 @@ class Coach():
 
             action = np.random.choice(len(pi), p=pi)
             board, self.curPlayer = self.game.getNextState(board, self.curPlayer, action)
-            self.game.display(board)
+            # self.game.display(board)
 
             r = self.game.getGameEnded(board, self.curPlayer)
 
@@ -126,6 +126,9 @@ class Coach():
             else:
                 log.info('ACCEPTING NEW MODEL')
                 self.nnet.save_checkpoint(self.args.checkpoint)
+            
+            if len(self.trainExamplesHistory) > 2000:
+                self.trainExamplesHistory = self.trainExamplesHistory[-2000:]
 
             if len(self.trainExamplesHistory) > 2000:
                 self.trainExamplesHistory = self.trainExamplesHistory[-2000:]
