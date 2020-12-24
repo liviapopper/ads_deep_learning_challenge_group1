@@ -126,6 +126,9 @@ class Coach():
             else:
                 log.info('ACCEPTING NEW MODEL')
                 self.nnet.save_checkpoint(self.args.checkpoint)
+            
+            if len(self.trainExamplesHistory) > 2000:
+                self.trainExamplesHistory = self.trainExamplesHistory[-2000:]
 
             
             if len(self.trainExamplesHistory) > 2000:
