@@ -1,6 +1,6 @@
 from Coach import Coach
 from TaflGame import TaflGame as Game
-from pytorch.NNet import NNetWrapper as nn
+from keras1.NNet import NNetWrapper as nn
 from utils import *
 
 import wandb

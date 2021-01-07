@@ -3,7 +3,7 @@ import logging
 import coloredlogs
 
 from Coach import Coach
-from keras.NNet import NNetWrapper as nn
+from keras1.NNet import NNetWrapper as nn
 from utils import dotdict
 
 from OthelloGame import OthelloGame

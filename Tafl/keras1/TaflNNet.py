@@ -1,13 +1,8 @@
-# import sys
-# sys.path.append('..')
-# from utils import *
-
-# import argparse
-from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Activation, BatchNormalization, Dense, Dropout, Flatten, Input
+from tensorflow.keras.models import Model, load_model
+from tensorflow.keras.layers import Activation, BatchNormalization, Dense, Dropout, Flatten, Input, Reshape, Conv2D
 from tensorflow.keras.optimizers import Adam
 
-class OthelloNNet():
+class TaflNNet():
     def __init__(self, game, args):
         # game params
         self.board_x, self.board_y = game.getBoardSize()
@@ -30,3 +25,9 @@ class OthelloNNet():
 
         self.model = Model(inputs=self.input_boards, outputs=[self.pi, self.v])
         self.model.compile(loss=['categorical_crossentropy','mean_squared_error'], optimizer=Adam(args.lr))
+
+    def save(self, folder):
+        self.model.save(folder)
+
+    def load(self, folder):
+        self.model = load_model(folder)
